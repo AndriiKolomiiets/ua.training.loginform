@@ -6,8 +6,8 @@ import java.util.Date;
 
 /**
  * Model process user data and write it into NoteBook.
- * @author Andrii Kolomiiets
  * Created on 07.04.2019
+ * @author Andrii Kolomiiets
  */
 
 public class Model {
