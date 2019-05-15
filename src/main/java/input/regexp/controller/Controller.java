@@ -25,12 +25,14 @@ public class Controller {
     public static final String PROPERTIES_EN = "message_and_regexp_en_GB";
     private Model model;
     private View view;
+    private JDBC jdbc;
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(PROPERTIES_EN,
             new Locale("en", "GB"));
 
-    public Controller(Model model, View view) {
+    public Controller(Model model, View view, JDBC jdbc) {
         this.model = model;
         this.view = view;
+        this.jdbc = jdbc;
     }
 
     /**
@@ -40,6 +42,7 @@ public class Controller {
      * Method call view for displaying saved information.
      */
     public void processUser() {
+        String login = null;
         Scanner in = new Scanner(System.in);
         setLocale(in);
 
@@ -49,8 +52,16 @@ public class Controller {
 
         model.setLastName(getAndCheckUserInput(resourceBundle.getString("last.name.input.message"),
                 resourceBundle.getString("first.last.name.regexp"), in));
-        model.setNickName(getAndCheckUserInput(resourceBundle.getString("nick.name.input.message"),
-                resourceBundle.getString("nick.name.regexp"), in));
+        boolean doesLoginExist = true;
+        while (doesLoginExist) {
+            login = getAndCheckUserInput(resourceBundle.getString("login.input.message"),
+                    resourceBundle.getString("login.regexp"), in);
+            doesLoginExist = jdbc.isLoginInDB(login);
+            if (doesLoginExist){
+                view.printMessage(resourceBundle.getString("wrong.login.message"));
+            }
+        }
+        model.setNickName(login);
         model.setEmail(getAndCheckUserInput(resourceBundle.getString("email.input.message"),
                 resourceBundle.getString("email.regexp"), in));
         model.setHomePhoneNumber(getAndCheckUserInput(resourceBundle.getString("home.phone.input.message"),
@@ -59,6 +70,9 @@ public class Controller {
                 resourceBundle.getString("mobile.phone.regexp"), in));
         in.close();
 
+        jdbc.buildUserInfoIntoDB(model.getNoteBook().getNickName(), model.getNoteBook().getFirstName(),
+                model.getNoteBook().getLastName(), model.getNoteBook().getEmail(), model.getNoteBook().getHomePhoneNumber(),
+                model.getNoteBook().getMobilePhoneNumber());
         model.setCreateTime();
         view.printNote(model.getNoteBook());
     }

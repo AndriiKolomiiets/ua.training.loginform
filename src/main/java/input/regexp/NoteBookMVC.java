@@ -1,5 +1,6 @@
 package input.regexp;
 
+import input.regexp.controller.JDBC;
 import input.regexp.view.View;
 import input.regexp.controller.Controller;
 import input.regexp.model.Model;
@@ -13,7 +14,8 @@ public class NoteBookMVC {
     public static void main(String[] args) {
         Model model = new Model();
         View view = new View();
-        Controller inputController = new Controller(model,view);
+        JDBC jdbc = JDBC.getInstance();
+        Controller inputController = new Controller(model,view, jdbc);
         inputController.processUser();
     }
 }

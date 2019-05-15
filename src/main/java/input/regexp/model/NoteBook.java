@@ -91,7 +91,7 @@ public class NoteBook {
     @Override
     public String toString() {
         return "\nNew note was created in NoteBook\nUser: " + getFirstName() + " " + getLastName()
-                + "\nNick Name: " + getNickName()
+                + "\nLogin: " + getNickName()
                 + "\nEmail: " + getEmail()
                 + "\nHome phone number: " + getHomePhoneNumber()
                 + "\nMobile phone number: " + getMobilePhoneNumber()

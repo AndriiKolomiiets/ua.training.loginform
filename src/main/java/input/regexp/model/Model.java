@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class Model {
 
-    NoteBook noteBook = new NoteBook();
+    private NoteBook noteBook = new NoteBook();
 
     public void setFirstName(String firstName) {
         noteBook.setFirstName(firstName);
