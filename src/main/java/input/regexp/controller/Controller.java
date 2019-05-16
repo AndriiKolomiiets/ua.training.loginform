@@ -2,7 +2,6 @@ package input.regexp.controller;
 
 import input.regexp.model.Dao;
 import input.regexp.model.User;
-import input.regexp.model.UserDao;
 import input.regexp.view.View;
 import input.regexp.model.Model;
 
@@ -28,7 +27,6 @@ public class Controller {
     public static final String PROPERTIES_EN = "message_and_regexp_en_GB";
     private Model model;
     private View view;
-//    private JDBC jdbc;
     private Dao dao;
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(PROPERTIES_EN,
             new Locale("en", "GB"));
@@ -74,9 +72,6 @@ public class Controller {
                 resourceBundle.getString("mobile.phone.regexp"), in));
         in.close();
 
-        /*jdbc.buildUserInfoIntoDB(model.getUser().getLogin(), model.getUser().getFirstName(),
-                model.getUser().getLastName(), model.getUser().getEmail(), model.getUser().getHomePhoneNumber(),
-                model.getUser().getMobilePhoneNumber());*/
         dao.buildUserInfoIntoDB(model.getUser());
         model.setCreateTime();
         view.printNote(model.getUser());

@@ -1,37 +1,35 @@
-package input.regexp.controller;
-
-import input.regexp.model.User;
+package input.regexp.model;
 
 import java.sql.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class JDBC {
+public class UserJdbcDao implements Dao {
     private static Connection connection;
-    private static volatile JDBC jdbc = null;
+    private static volatile UserJdbcDao userJdbcDao = null;
     private static PreparedStatement preparedStatement;
     public static final String PROPERTIES_EN = "message_and_regexp_en_GB";
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(PROPERTIES_EN,
             new Locale("en", "GB"));
 
-    private JDBC() {}
+    private UserJdbcDao() {}
 
-    public static JDBC getInstance() {
-        if (jdbc == null) {
-            synchronized (JDBC.class) {
-                if (jdbc == null) {
-                    jdbc = new JDBC();
+    public static UserJdbcDao getInstance() {
+        if (userJdbcDao == null) {
+            synchronized (UserJdbcDao.class) {
+                if (userJdbcDao == null) {
+                    userJdbcDao = new UserJdbcDao();
                 }
             }
         }
-        return new JDBC();
+        return new UserJdbcDao();
     }
 
     private Connection connectToDb() {
         connection = null;
         try {
             Driver driver = new com.mysql.jdbc.Driver();
-//            Driver driver = new com.mysql.cj.jdbc.Driver();
+//            Driver driver = new com.mysql.cj.userJdbcDao.Driver();
             DriverManager.registerDriver(driver);
             connection = DriverManager.getConnection(
                     resourceBundle.getString("jdbc.db.connection"),
@@ -43,7 +41,7 @@ public class JDBC {
         return connection;
     }
 
-    public boolean isLoginInDB(String userLogin){
+    public boolean isLoginInDb(String userLogin){
         Statement statement;
         ResultSet rs;
         String loginFromDB=null;

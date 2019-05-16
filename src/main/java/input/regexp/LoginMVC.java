@@ -1,8 +1,7 @@
 package input.regexp;
 
-import input.regexp.controller.JDBC;
+import input.regexp.model.UserJdbcDao;
 import input.regexp.model.Dao;
-import input.regexp.model.UserDao;
 import input.regexp.view.View;
 import input.regexp.controller.Controller;
 import input.regexp.model.Model;
@@ -14,10 +13,9 @@ import input.regexp.model.Model;
  */
 public class LoginMVC {
     public static void main(String[] args) {
-        JDBC jdbc = JDBC.getInstance();
         Model model = new Model();
         View view = new View();
-        Dao dao = new UserDao(jdbc);
+        Dao dao = UserJdbcDao.getInstance();
         Controller inputController = new Controller(model,view, dao);
         inputController.processUser();
     }
