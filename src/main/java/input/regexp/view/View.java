@@ -1,6 +1,6 @@
 package input.regexp.view;
 
-import input.regexp.model.NoteBook;
+import input.regexp.model.User;
 
 /**
  * View class display messages and Note information on console.
@@ -12,7 +12,7 @@ public class View {
         System.out.println(message);
     }
 
-    public void printNote(NoteBook noteBook){
-        System.out.println(noteBook);
+    public void printNote(User user){
+        System.out.println(user);
     }
 }

@@ -1,5 +1,7 @@
 package input.regexp.controller;
 
+import input.regexp.model.User;
+
 import java.sql.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -40,7 +42,7 @@ public class JDBC {
         }
         return connection;
     }
-//todo:check doesn't work
+
     public boolean isLoginInDB(String userLogin){
         Statement statement;
         ResultSet rs;
@@ -59,8 +61,25 @@ public class JDBC {
           return loginFromDB != null;
     }
 
-    public void buildUserInfoIntoDB(String login, String firstName, String lastName, String email,
-                                    String homePhone, String mobilePhone) {
+    public String getFieldByCondition(String column, String condition){
+        Statement statement;
+        ResultSet rs;
+        String field=null;
+        connection = connectToDb();
+        try {
+            statement = connection.createStatement();
+
+            rs = statement.executeQuery("SELECT login FROM user_login WHERE "+column+"='"+condition+"'");
+            while (rs.next()){
+                field = rs.getString(column);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return field;
+    }
+
+    public void buildUserInfoIntoDB(User user) {
         connection = connectToDb();
         try {
             connection.setAutoCommit(false);
@@ -70,12 +89,12 @@ public class JDBC {
         try {
             preparedStatement = connection.prepareStatement(
                     resourceBundle.getString("jdbc.db.insertUserIntoDB"));
-            preparedStatement.setString(1, login);
-            preparedStatement.setString(2, firstName);
-            preparedStatement.setString(3, lastName);
-            preparedStatement.setString(4, email);
-            preparedStatement.setString(5, homePhone);
-            preparedStatement.setString(6, mobilePhone);
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getFirstName());
+            preparedStatement.setString(3, user.getLastName());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getHomePhoneNumber());
+            preparedStatement.setString(6, user.getMobilePhoneNumber());
             preparedStatement.addBatch();
             preparedStatement.executeBatch();
         } catch (SQLException e) {

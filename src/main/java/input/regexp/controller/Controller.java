@@ -1,5 +1,8 @@
 package input.regexp.controller;
 
+import input.regexp.model.Dao;
+import input.regexp.model.User;
+import input.regexp.model.UserDao;
 import input.regexp.view.View;
 import input.regexp.model.Model;
 
@@ -8,11 +11,11 @@ import java.util.*;
 /**
  * Controller
  * Controller class is used to input, verify and check data form the console.
- * In case input is OK it can call Model class for writing data into NoteBook class.
+ * In case input is OK it can call Model class for writing data into User class.
  *
  * @author Andrii Kolomiiets
  * @see input.regexp.model.Model
- * @see input.regexp.model.NoteBook
+ * @see User
  * <p>
  * Controller display all the messages to the console with View class.
  * @see input.regexp.view.View
@@ -25,14 +28,15 @@ public class Controller {
     public static final String PROPERTIES_EN = "message_and_regexp_en_GB";
     private Model model;
     private View view;
-    private JDBC jdbc;
+//    private JDBC jdbc;
+    private Dao dao;
     private ResourceBundle resourceBundle = ResourceBundle.getBundle(PROPERTIES_EN,
             new Locale("en", "GB"));
 
-    public Controller(Model model, View view, JDBC jdbc) {
+    public Controller(Model model, View view, Dao dao) {
         this.model = model;
         this.view = view;
-        this.jdbc = jdbc;
+        this.dao = dao;
     }
 
     /**
@@ -56,7 +60,7 @@ public class Controller {
         while (doesLoginExist) {
             login = getAndCheckUserInput(resourceBundle.getString("login.input.message"),
                     resourceBundle.getString("login.regexp"), in);
-            doesLoginExist = jdbc.isLoginInDB(login);
+            doesLoginExist = dao.isLoginInDb(login);
             if (doesLoginExist){
                 view.printMessage(resourceBundle.getString("wrong.login.message"));
             }
@@ -70,15 +74,16 @@ public class Controller {
                 resourceBundle.getString("mobile.phone.regexp"), in));
         in.close();
 
-        jdbc.buildUserInfoIntoDB(model.getNoteBook().getNickName(), model.getNoteBook().getFirstName(),
-                model.getNoteBook().getLastName(), model.getNoteBook().getEmail(), model.getNoteBook().getHomePhoneNumber(),
-                model.getNoteBook().getMobilePhoneNumber());
+        /*jdbc.buildUserInfoIntoDB(model.getUser().getLogin(), model.getUser().getFirstName(),
+                model.getUser().getLastName(), model.getUser().getEmail(), model.getUser().getHomePhoneNumber(),
+                model.getUser().getMobilePhoneNumber());*/
+        dao.buildUserInfoIntoDB(model.getUser());
         model.setCreateTime();
-        view.printNote(model.getNoteBook());
+        view.printNote(model.getUser());
     }
 
     /**
-     * setLocation method changes NoteBook locale.
+     * setLocation method changes User locale.
      */
     private void setLocale(Scanner scanner) {
         view.printMessage(resourceBundle.getString("locale.input.message"));

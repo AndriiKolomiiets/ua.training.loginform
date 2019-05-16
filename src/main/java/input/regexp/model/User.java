@@ -1,11 +1,11 @@
 package input.regexp.model;
 
 /**
- * NoteBook class store user information.
+ * User class store user information.
  * @author Andrii Kolomiiets
  * Created on 07.04.2019
  */
-public class NoteBook {
+public class User {
     private String firstName;
     private String lastName;
     private String initials;
@@ -36,7 +36,7 @@ public class NoteBook {
         return initials;
     }
 
-    public String getNickName() {
+    public String getLogin() {
         return nickName;
     }
 
@@ -90,8 +90,8 @@ public class NoteBook {
 
     @Override
     public String toString() {
-        return "\nNew note was created in NoteBook\nUser: " + getFirstName() + " " + getLastName()
-                + "\nLogin: " + getNickName()
+        return "\nNew note was created in User\nUser: " + getFirstName() + " " + getLastName()
+                + "\nLogin: " + getLogin()
                 + "\nEmail: " + getEmail()
                 + "\nHome phone number: " + getHomePhoneNumber()
                 + "\nMobile phone number: " + getMobilePhoneNumber()

@@ -5,25 +5,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Model process user data and write it into NoteBook.
+ * Model process user data and write it into User.
  * Created on 07.04.2019
  * @author Andrii Kolomiiets
  */
 
 public class Model {
 
-    private NoteBook noteBook = new NoteBook();
+    private User user = new User();
 
     public void setFirstName(String firstName) {
-        noteBook.setFirstName(firstName);
+        user.setFirstName(firstName);
     }
 
     public void setLastName(String lastName) {
-        noteBook.setLastName(lastName);
+        user.setLastName(lastName);
     }
 
     public void setNickName(String nickName) {
-        noteBook.setNickName(nickName);
+        user.setNickName(nickName);
     }
 
     /**
@@ -34,19 +34,19 @@ public class Model {
         char nameInitial = stringBuffer.charAt(0);
         StringBuffer strBuf = new StringBuffer(lastName);
         String initials = new String(strBuf.append(" " + nameInitial + "."));
-        noteBook.setInitials(initials);
+        user.setInitials(initials);
     }
 
     public void setEmail(String email) {
-        noteBook.setEmail(email);
+        user.setEmail(email);
     }
 
     public void setHomePhoneNumber(String homePhoneNumber) {
-       noteBook.setHomePhoneNumber(homePhoneNumber);
+       user.setHomePhoneNumber(homePhoneNumber);
     }
 
     public void setMobilePhoneNumber (String mobilePhoneNumber){
-        noteBook.setMobilePhoneNumber(mobilePhoneNumber);
+        user.setMobilePhoneNumber(mobilePhoneNumber);
     }
 
     /**
@@ -55,11 +55,11 @@ public class Model {
     public void setCreateTime() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
-        noteBook.setCreateTime(dateFormat.format(date));
+        user.setCreateTime(dateFormat.format(date));
     }
 
-    public NoteBook getNoteBook(){
-        return noteBook;
+    public User getUser(){
+        return user;
     }
 
 
